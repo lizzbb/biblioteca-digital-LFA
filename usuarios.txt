@@ -1,0 +1,4 @@
+id_usuario,nombre_usuario
+1001,Ana López
+1002,Carlos Ramírez
+1003,Lucía Méndez
