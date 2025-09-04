@@ -1,3 +1,5 @@
+from datetime import datetime
+
 #tokens
 TOKENS = {
     "ID_USUARIO": "ID de Usuario",
@@ -10,9 +12,9 @@ TOKENS = {
 }
 
 def clasificar_lexema(lexema):
-    if lexema.isdigit():
+    if lexema.isdigit() and len(lexema) == 4:
         return "ID_USUARIO"
-    elif lexema.startswith("LIB"):
+    elif lexema.startswith("LIB") and lexema[3:].isdigit() and len(lexema) == 6:
         return "ID_LIBRO"
     elif "-" in lexema and len(lexema) == 10:
         return "FECHA"
@@ -38,28 +40,49 @@ def analizador_lexico(linea):
         tokens.append((clasificar_lexema(lexema.strip()), lexema.strip()))
     return tokens
 
-def leer_archivo(nombre_archivo):
+def leer_archivo(nombre_archivo, usuarios: dict[str, str], libros: dict[str,str]):
     prestamos = []
     with open(nombre_archivo, "r", encoding="utf-8") as f:
         encabezado = f.readline()  # ignorar encabezado
+        lineas_leidas = 1
         for linea in f:
-            tokens = analizador_lexico(linea.strip())
-            valores = [t[1] for t in tokens if t[0] != "COMA"]
+            lineas_leidas += 1
+            tokens = analizador_lexico(linea.strip()) #clasificación de tokens
+            valores = [t[1] for t in tokens if t[0] != "COMA"] # asignación de valores en tokens (excluyendo separadores)
             if len(valores) == 6:
+                id_usuario, nombre_usuario, id_libro, titulo_libro, fecha_prestamo, fecha_devolucion = valores
+                fecha_devolucion = fecha_devolucion if fecha_devolucion != "" else None
                 
+                # Verificación de usuario
+                if id_usuario not in usuarios: 
+                    print(f"Error: Usuario '{id_usuario}' no registrado. (Línea {lineas_leidas})")
+                    continue
+                if usuarios[id_usuario] != nombre_usuario: 
+                    print(f"Error: Nombre de usuario '{nombre_usuario}' no coincide con registro para usuario '{id_usuario}'. (Línea {lineas_leidas})")
+                    continue
+
+                # Verificación de libro
+                if id_libro not in libros: 
+                    print(f"Error: Libro '{id_libro}' no registrado. (Línea {lineas_leidas})")
+                    continue
+                if libros[id_libro] != titulo_libro: 
+                    print(f"Error: Titulo '{titulo_libro}' no coincide con registro para libro '{id_libro}'. (Línea {lineas_leidas})")
+                    continue
+
                 prestamos.append({
-                    "id_usuario": valores[0],
-                    "nombre_usuario": valores[1],
-                    "id_libro": valores[2],
-                    "titulo_libro": valores[3],
-                    "fecha_prestamo": valores[4],
-                    "fecha_devolucion": valores[5] if valores[5] != "" else None
+                    "id_usuario": id_usuario,
+                    "nombre_usuario": nombre_usuario,
+                    "id_libro": id_libro,
+                    "titulo_libro": titulo_libro,
+                    "fecha_prestamo": fecha_prestamo,
+                    "fecha_devolucion": fecha_devolucion
                 })
+
     return prestamos
 
 #Cargar usuarios y catalogo de libros
 def cargar_archivo(nombre_archivo):
-    datos = []
+    datos = {}
     id_unicos = set()
 
     with open(nombre_archivo, "r", encoding="utf-8") as f:
@@ -77,22 +100,20 @@ def cargar_archivo(nombre_archivo):
                 
                 id_unicos.add(valores[0])
 
-                datos.append({
-                    "id_usuario": valores[0],
-                    "nombre_usuario": valores[1]
-                })
+                datos[valores[0]] = valores[1]
+
             elif(tokens[0][0] == "ID_LIBRO"):
                 if valores[0] in id_unicos: 
                    print(f"ID '{valores[0]}' repetido en linea {lineas_leidas}: '{linea}'.") 
                    continue
 
                 id_unicos.add(valores[0])
-                
-                datos.append({
-                    "id_libro": valores[0],
-                    "titulo_libro": valores[1]
-                })
-            else: return None
+
+                datos[valores[0]] = valores[1]
+
+            else: 
+                print(f"Error: token {tokens[0]} no válido. (Línea {lineas_leidas})")
+                continue
             
     return datos
 
@@ -144,15 +165,16 @@ def main():
     archivo_usuarios = "usuarios.txt"
     archivo_libros = "libros.txt"
     archivo = "prueba.lfa"
-    prestamos = leer_archivo(archivo)
     usuarios = cargar_archivo(archivo_usuarios)
     libros = cargar_archivo(archivo_libros)
+    prestamos = leer_archivo(archivo, usuarios, libros)
+    
 
     for u in usuarios:
-        print(u)
+        print(f"{u}: {usuarios[u]}")
     
     for l in libros: 
-        print(l)
+        print(f"{l}: {libros[l]}")
 
     historial_prestamos(prestamos)
     listado_usuarios(prestamos)
