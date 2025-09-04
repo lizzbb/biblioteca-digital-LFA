@@ -46,6 +46,7 @@ def leer_archivo(nombre_archivo):
             tokens = analizador_lexico(linea.strip())
             valores = [t[1] for t in tokens if t[0] != "COMA"]
             if len(valores) == 6:
+                
                 prestamos.append({
                     "id_usuario": valores[0],
                     "nombre_usuario": valores[1],
@@ -55,6 +56,46 @@ def leer_archivo(nombre_archivo):
                     "fecha_devolucion": valores[5] if valores[5] != "" else None
                 })
     return prestamos
+
+#Cargar usuarios y catalogo de libros
+def cargar_archivo(nombre_archivo):
+    datos = []
+    id_unicos = set()
+
+    with open(nombre_archivo, "r", encoding="utf-8") as f:
+        encabezado = f.readline()  # ignorar encabezado
+        lineas_leidas = 1
+        for linea in f:
+            lineas_leidas += 1
+            tokens = analizador_lexico(linea.strip())
+            valores = [t[1] for t in tokens if t[0] != "COMA"]
+
+            if(tokens[0][0] == "ID_USUARIO"):
+                if valores[0] in id_unicos: 
+                   print(f"ID '{valores[0]}' repetido en linea {lineas_leidas}: '{linea}'.") 
+                   continue
+                
+                id_unicos.add(valores[0])
+
+                datos.append({
+                    "id_usuario": valores[0],
+                    "nombre_usuario": valores[1]
+                })
+            elif(tokens[0][0] == "ID_LIBRO"):
+                if valores[0] in id_unicos: 
+                   print(f"ID '{valores[0]}' repetido en linea {lineas_leidas}: '{linea}'.") 
+                   continue
+
+                id_unicos.add(valores[0])
+                
+                datos.append({
+                    "id_libro": valores[0],
+                    "titulo_libro": valores[1]
+                })
+            else: return None
+            
+    return datos
+
 
 #Préstamos
 def historial_prestamos(prestamos):
@@ -100,8 +141,18 @@ def prestamos_vencidos(prestamos, fecha_actual="2025-07-15"):
 
 
 def main():
-    archivo = "prestamos.txt"
+    archivo_usuarios = "usuarios.txt"
+    archivo_libros = "libros.txt"
+    archivo = "prueba.lfa"
     prestamos = leer_archivo(archivo)
+    usuarios = cargar_archivo(archivo_usuarios)
+    libros = cargar_archivo(archivo_libros)
+
+    for u in usuarios:
+        print(u)
+    
+    for l in libros: 
+        print(l)
 
     historial_prestamos(prestamos)
     listado_usuarios(prestamos)
