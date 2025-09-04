@@ -83,7 +83,6 @@ def leer_archivo(nombre_archivo, usuarios: dict[str, str], libros: dict[str,str]
 #Cargar usuarios y catalogo de libros
 def cargar_archivo(nombre_archivo):
     datos = {}
-    id_unicos = set()
 
     with open(nombre_archivo, "r", encoding="utf-8") as f:
         encabezado = f.readline()  # ignorar encabezado
@@ -94,20 +93,16 @@ def cargar_archivo(nombre_archivo):
             valores = [t[1] for t in tokens if t[0] != "COMA"]
 
             if(tokens[0][0] == "ID_USUARIO"):
-                if valores[0] in id_unicos: 
-                   print(f"ID '{valores[0]}' repetido en linea {lineas_leidas}: '{linea}'.") 
+                if valores[0] in datos: 
+                   print(f"Error: Usuario '{valores[0]}' ya registrado. (Línea {lineas_leidas})") 
                    continue
-                
-                id_unicos.add(valores[0])
 
                 datos[valores[0]] = valores[1]
 
             elif(tokens[0][0] == "ID_LIBRO"):
-                if valores[0] in id_unicos: 
-                   print(f"ID '{valores[0]}' repetido en linea {lineas_leidas}: '{linea}'.") 
+                if valores[0] in datos: 
+                   print(f"Error: Libro '{valores[0]}' ya registrado. (Línea {lineas_leidas})")  
                    continue
-
-                id_unicos.add(valores[0])
 
                 datos[valores[0]] = valores[1]
 
