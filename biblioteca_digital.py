@@ -149,7 +149,8 @@ def estadisticas(prestamos):
     print("Usuarios únicos:", len(usuarios))
 
 #Vencidos
-def prestamos_vencidos(prestamos, fecha_actual="2025-07-15"):
+def prestamos_vencidos(prestamos):
+    fecha_actual = datetime.now().strftime("%Y-%m-%d")
     print("\nPRÉSTAMOS VENCIDOS")
     for p in prestamos:
         if p["fecha_devolucion"] and p["fecha_devolucion"] < fecha_actual:
