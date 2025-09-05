@@ -3,3 +3,4 @@ id_usuario,nombre_usuario
 1002,Carlos Ramírez
 1003,Lucía Méndez
 1001,Juan Perez
+1004,Juan Perez
