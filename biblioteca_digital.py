@@ -265,7 +265,221 @@ def prestamos_vencidos(prestamos):
         if (fecha_prestamo and fecha_devolucion) < fecha_actual:
             print(p)
 
+"""
+#plantilla documetno HTML
+HTML_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{titulo}</title>
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }}
+        h1 {{
+            text-align: center;
+            color: #E3AAAA;
+        }}
+        table {{
+            border-collapse: collapse;
+            width: 90%;
+            margin: auto;
+            background: white;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }}
+        th, td {{
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }}
+        th {{
+            background-color: #9E366D;
+            color: white;
+        }}
+    </style>
+</head>
+<body>
+    <h1>{titulo}</h1>
+    <table>
+        <thead>
+            <tr>{encabezados}</tr>
+        </thead>
+        <tbody>
+            {filas}
+        </tbody>
+    </table>
+    <div class="footer">
+        Generado automáticamente el {fecha}
+    </div>
+</body>
+</html>
+"""
 
+#manejo de HTML, carga de reportes
+def exportar_html(nombre_archivo, titulo, encabezados, datos):
+    filas_html = ""
+    for fila in datos:
+        celdas = "".join(f"<td>{col}</td>" for col in fila)
+        filas_html += f"<tr>{celdas}</tr>\n"
+
+    encabezados_html = "".join(f"<th>{col}</th>" for col in encabezados)
+    fecha_actual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    html = HTML_TEMPLATE.format(
+        titulo=titulo,
+        encabezados=encabezados_html,
+        filas=filas_html,
+        fecha=fecha_actual
+    )
+
+    with open(nombre_archivo, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    print(f"Reporte '{titulo}' exportado como {nombre_archivo}")
+
+def exportar_historial(prestamos):
+    datos = [[p["id_usuario"], p["nombre_usuario"], p["id_libro"], p["titulo_libro"], p["fecha_prestamo"], p["fecha_devolucion"] or "Pendiente"] for p in prestamos]
+    exportar_html("reporte_historial.html", "Historial de Préstamos",
+                  ["ID Usuario", "Nombre Usuario", "ID Libro", "Título Libro", "Fecha Préstamo", "Fecha Devolución"], datos)
+
+
+def exportar_usuarios(prestamos):
+    usuarios = {p["id_usuario"]: p["nombre_usuario"] for p in prestamos}
+    datos = [[uid, nombre] for uid, nombre in usuarios.items()]
+    exportar_html("reporte_usuarios.html", "Listado de Usuarios",
+                  ["ID Usuario", "Nombre Usuario"], datos)
+
+
+def exportar_libros(prestamos):
+    libros = {p["id_libro"]: p["titulo_libro"] for p in prestamos}
+    datos = [[lid, titulo] for lid, titulo in libros.items()]
+    exportar_html("reporte_libros.html", "Listado de Libros Prestados",
+                  ["ID Libro", "Título Libro"], datos)
+
+
+def exportar_estadisticas(prestamos):
+    from collections import Counter
+    usuarios = Counter(p["id_usuario"] for p in prestamos)
+    libros = Counter(p["id_libro"] for p in prestamos)
+    total = len(prestamos)
+    mas_activo = max(usuarios, key=usuarios.get)
+    mas_prestado = max(libros, key=libros.get)
+
+    datos = [
+        ["Total préstamos", total],
+        ["Usuario más activo", f"{mas_activo} ({usuarios[mas_activo]} préstamos)"],
+        ["Libro más prestado", f"{mas_prestado} ({libros[mas_prestado]} préstamos)"],
+        ["Usuarios únicos", len(usuarios)]
+    ]
+    exportar_html("reporte_estadisticas.html", "Estadísticas",
+                  ["Métrica", "Valor"], datos)
+
+
+def exportar_vencidos(prestamos, fecha_actual="2025-07-15"):
+    fecha_actual = datetime.strptime(fecha_actual, "%Y-%m-%d")
+    vencidos = []
+    for p in prestamos:
+        if p["fecha_devolucion"]:
+            devol = datetime.strptime(p["fecha_devolucion"], "%Y-%m-%d")
+            if devol < fecha_actual:
+                vencidos.append([p["id_usuario"], p["id_libro"], p["titulo_libro"], p["fecha_prestamo"], p["fecha_devolucion"]])
+
+    exportar_html("reporte_vencidos.html", "Préstamos Vencidos",
+                  ["ID Usuario", "ID Libro", "Título", "Fecha Préstamo", "Fecha Devolución"], vencidos)
+
+def main():
+    usuarios = {}
+    libros = {}
+    prestamos = []
+
+    while True:
+        print("Biblioteca Digital:")
+        print("1. Cargar usuarios")
+        print("2. Cargar libros")
+        print("3. Cargar registro de préstamos desde archivo")
+        print("4. Mostrar historial de préstamos")
+        print("5. Mostrar listado de usuarios únicos")
+        print("6. Mostrar listado de libros prestados")
+        print("7. Mostrar estadísticas de préstamos")
+        print("8. Mostrar préstamos vencidos")
+        print("9. Exportar todos los reportes a HTML")
+        print("0. Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        match opcion:
+            case "1":
+                archivo_usuarios = input("Ingrese el nombre del archivo de usuarios: ")
+                usuarios = cargar_archivo(archivo_usuarios)
+                print(f"Usuarios cargados: {len(usuarios)}")
+
+            case "2":
+                archivo_libros = input("Ingrese el nombre del archivo de libros: ")
+                libros = cargar_archivo(archivo_libros)
+                print(f"Libros cargados: {len(libros)}")
+
+            case "3":
+                archivo_prestamos = input("Ingrese el archivo de préstamos (.lfa): ")
+                prestamos = leer_archivo(archivo_prestamos, usuarios, libros)
+                print(f"Préstamos cargados: {len(prestamos)}")
+
+            case "4":
+                if prestamos:
+                    historial_prestamos(prestamos)
+                else:
+                    print("No existen préstamos cargados")
+
+            case "5":
+                if prestamos:
+                    listado_usuarios(prestamos)
+                else:
+                    print("No existen préstamos cargados")
+
+            case "6":
+                if prestamos:
+                    listado_libros(prestamos)
+                else:
+                    print("No existen préstamos cargados")
+
+            case "7":
+                if prestamos:
+                    estadisticas(prestamos)
+                else:
+                    print("No existen préstamos cargados")
+
+            case "8":
+                if prestamos:
+                    fecha = datetime.now().strftime("%Y-%m-%d")
+                    print(f"Usando la fecha actual del sistema: {fecha}")
+                    prestamos_vencidos(prestamos, fecha)
+                else:
+                    print("No existen préstamos cargados")
+
+            case "9":
+                if prestamos:
+                    exportar_historial(prestamos)
+                    exportar_usuarios(prestamos)
+                    exportar_libros(prestamos)
+                    exportar_estadisticas(prestamos)
+                    fecha = datetime.now().strftime("%Y-%m-%d")
+                    print(f"Usando la fecha actual del sistema: {fecha}")
+                    exportar_vencidos(prestamos, fecha)
+                    print("Reportes exportados a HTML.")
+                else:
+                    print("No existen préstamos cargados")
+
+            case "0":
+                print("Saliendo del sistema")
+                break
+
+            case _:
+                print("Opción inválida. Intente de nuevo.")
+"""
 def main():
     archivo_usuarios = "usuarios.txt"
     archivo_libros = "libros.txt"
@@ -291,3 +505,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
