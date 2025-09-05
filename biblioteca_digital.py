@@ -116,7 +116,7 @@ def validar_linea(tokens, linea, num_linea):
     valores = [t[1] for t in tokens if t[0] != "coma"]
 
     if len(valores) != 6:
-        print(f"Inválido: cantidad incorrecta de campos en linea {num_linea}, se esperaban 6 campos, se encontraron {len(valores)}.")
+        print(f"inválido: cantidad incorrecta de campos en linea {num_linea}, se esperaban 6 campos, se encontraron {len(valores)}.")
         return None
 
     if "desconocido" in tipos:
@@ -126,7 +126,6 @@ def validar_linea(tokens, linea, num_linea):
     
     if tipos != orden_valido:
         print(f"inválido: orden de tokens inválido en línea {num_linea}; se obtuvo {tipos}, y se esperaban {orden_valido}.")
-        print(f"Inválido: orden de tokens inváñido en línea {num_linea}; se obtuvo {tipos}, y se esperaban {orden_valido}.")
         return None
     
     for campo, valor in zip(orden_valido, valores):
@@ -185,8 +184,6 @@ def cargar_archivo(nombre_archivo):
 
     with open(nombre_archivo, "r", encoding="utf-8") as f:
         encabezado = f.readline().strip()
-    with open(nombre_archivo, "r") as f:
-        encabezado = f.readline()  # ignorar encabezado
         lineas_leidas = 1
 
         # Detectar tipo de archivo según encabezado
@@ -294,5 +291,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
