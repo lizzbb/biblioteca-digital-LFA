@@ -138,85 +138,90 @@ def validar_linea(tokens, linea, num_linea):
 
 def leer_archivo(nombre_archivo, usuarios: dict[str, str], libros: dict[str,str]):
     prestamos = []
-    with open(nombre_archivo, "r") as f:
-        encabezado = f.readline()  # ignorar encabezado
-        lineas_leidas = 1
-        for linea in f:
-            lineas_leidas += 1
-            tokens = analizador_lexico(linea.strip()) #clasificación de tokens
-            valores = validar_linea(tokens, linea, lineas_leidas)
-            if not valores:
-                continue  # descartar línea inválida
+    try: 
+        with open(nombre_archivo, "r", encoding="utf-8") as f:
+            encabezado = f.readline()  # ignorar encabezado
+            lineas_leidas = 1
+            for linea in f:
+                lineas_leidas += 1
+                tokens = analizador_lexico(linea.strip()) #clasificación de tokens
+                valores = validar_linea(tokens, linea, lineas_leidas)
+                if not valores:
+                    continue  # descartar línea inválida
 
-            id_usuario, nombre_usuario, id_libro, titulo_libro_libro, fecha_prestamo, fecha_devolucion = valores
-            fecha_devolucion = fecha_devolucion if fecha_devolucion != "" else None
+                id_usuario, nombre_usuario, id_libro, titulo_libro_libro, fecha_prestamo, fecha_devolucion = valores
+                fecha_devolucion = fecha_devolucion if fecha_devolucion != "" else None
 
-            # Verificación de usuario
-            if id_usuario not in usuarios: 
-                print(f"inválido: Usuario '{id_usuario}' no registrado. (Línea {lineas_leidas})")
-                continue
-            if usuarios[id_usuario] != nombre_usuario: 
-                print(f"inválido: nombre_usuario '{nombre_usuario}' no coincide con registro de '{id_usuario}'. (Línea {lineas_leidas})")
-                continue
+                # Verificación de usuario
+                if id_usuario not in usuarios: 
+                    print(f"inválido: Usuario '{id_usuario}' no registrado. (Línea {lineas_leidas})")
+                    continue
+                if usuarios[id_usuario] != nombre_usuario: 
+                    print(f"inválido: nombre_usuario '{nombre_usuario}' no coincide con registro de '{id_usuario}'. (Línea {lineas_leidas})")
+                    continue
 
-            # Verificación de libro
-            if id_libro not in libros: 
-                print(f"inválido: Libro '{id_libro}' no registrado. (Línea {lineas_leidas})")
-                continue
-            if libros[id_libro] != titulo_libro_libro: 
-                print(f"Error: titulo_libro '{titulo_libro_libro}' no coincide con registro de '{id_libro}'. (Línea {lineas_leidas})")
-                continue
+                # Verificación de libro
+                if id_libro not in libros: 
+                    print(f"inválido: Libro '{id_libro}' no registrado. (Línea {lineas_leidas})")
+                    continue
+                if libros[id_libro] != titulo_libro_libro: 
+                    print(f"Error: titulo_libro '{titulo_libro_libro}' no coincide con registro de '{id_libro}'. (Línea {lineas_leidas})")
+                    continue
 
-            prestamos.append({
-                "id_usuario": id_usuario,
-                "nombre_usuario": nombre_usuario,
-                "id_libro": id_libro,
-                "titulo_libro": titulo_libro_libro,
-                "fecha_prestamo": fecha_prestamo,
-                "fecha_devolucion": fecha_devolucion
-            })
-
+                prestamos.append({
+                    "id_usuario": id_usuario,
+                    "nombre_usuario": nombre_usuario,
+                    "id_libro": id_libro,
+                    "titulo_libro": titulo_libro_libro,
+                    "fecha_prestamo": fecha_prestamo,
+                    "fecha_devolucion": fecha_devolucion
+                })
+    except FileNotFoundError: 
+        print(f"\nNo existe el archivo: '{nombre_archivo}'")
     return prestamos
+    
 
 #Cargar usuarios y catalogo de libros
 def cargar_archivo(nombre_archivo):
     datos = {}
+    try:
+        with open(nombre_archivo, "r", encoding="utf-8") as f:
+            encabezado = f.readline().strip()
+            lineas_leidas = 1
 
-    with open(nombre_archivo, "r", encoding="utf-8") as f:
-        encabezado = f.readline().strip()
-        lineas_leidas = 1
-
-        # Detectar tipo de archivo según encabezado
-        if encabezado == "id_usuario,nombre_usuario":
-            clave_campo, valor_campo = "id_usuario", "nombre_usuario"
-        elif encabezado == "id_libro,titulo_libro":
-            clave_campo, valor_campo = "id_libro", "titulo_libro"
-        else:
-            print(f"Error: Campos inválidos '{encabezado}' en archivo '{nombre_archivo}'. (Línea {lineas_leidas})")
-            return None
-        
-        for linea in f:
-            lineas_leidas += 1
-            partes = linea.strip().split(",")
-            if len(partes) != 2:
-                print(f"Inválido: Cantidad incorrecta de campos en línea {lineas_leidas}, se esperaban 2, se encontraron {len(partes)}.")
-                continue
+            # Detectar tipo de archivo según encabezado
+            if encabezado == "id_usuario,nombre_usuario":
+                clave_campo, valor_campo = "id_usuario", "nombre_usuario"
+            elif encabezado == "id_libro,titulo_libro":
+                clave_campo, valor_campo = "id_libro", "titulo_libro"
+            else:
+                print(f"Error: Campos inválidos '{encabezado}' en archivo '{nombre_archivo}'. (Línea {lineas_leidas})")
+                return None
             
-            clave, valor = partes[0].strip(), partes[1].strip()
+            for linea in f:
+                lineas_leidas += 1
+                partes = linea.strip().split(",")
+                if len(partes) != 2:
+                    print(f"Inválido: Cantidad incorrecta de campos en línea {lineas_leidas}, se esperaban 2, se encontraron {len(partes)}.")
+                    continue
+                
+                clave, valor = partes[0].strip(), partes[1].strip()
 
-            # Validar que la clave y valor coincida con los campos
-            if not (validar_campo(clave, clave_campo, lineas_leidas) and 
-                    validar_campo(valor, valor_campo, lineas_leidas)):
-                print(f"Inválido: Datos no coinciden con campos ('{clave_campo}', '{valor_campo}') esperados. (Línea {lineas_leidas})")
-                continue
-            
-            # Verificar duplicados
-            if clave in datos:
-                print(f"Inválido: ID '{clave}' ya registrado. (Línea {lineas_leidas}: '{linea.strip()}').")
-                continue
+                # Validar que la clave y valor coincida con los campos
+                if not (validar_campo(clave, clave_campo, lineas_leidas) and 
+                        validar_campo(valor, valor_campo, lineas_leidas)):
+                    print(f"Inválido: Datos no coinciden con campos ('{clave_campo}', '{valor_campo}') esperados. (Línea {lineas_leidas})")
+                    continue
+                
+                # Verificar duplicados
+                if clave in datos:
+                    print(f"Inválido: ID '{clave}' ya registrado. (Línea {lineas_leidas}: '{linea.strip()}').")
+                    continue
 
-            datos[clave] = valor
-
+                datos[clave] = valor
+    except FileNotFoundError: 
+        print(f"\nNo existe el archivo: '{nombre_archivo}'")
+    
     return datos
 
 #Préstamos
@@ -255,8 +260,7 @@ def estadisticas(prestamos):
     print("Usuarios únicos:", len(usuarios))
 
 #Vencidos
-def prestamos_vencidos(prestamos):
-    fecha_actual = datetime.now().strftime("%Y-%m-%d")
+def prestamos_vencidos(prestamos, fecha_actual):
     print("\nPRÉSTAMOS VENCIDOS")
     for p in prestamos:
         fecha_prestamo = datetime.strftime(p["fecha_prestamo"], "%Y-%m-%d")
@@ -265,7 +269,7 @@ def prestamos_vencidos(prestamos):
         if (fecha_prestamo and fecha_devolucion) < fecha_actual:
             print(p)
 
-"""
+
 #plantilla documetno HTML
 HTML_TEMPLATE = """
 <!DOCTYPE html>
@@ -418,6 +422,9 @@ def main():
                 usuarios = cargar_archivo(archivo_usuarios)
                 print(f"Usuarios cargados: {len(usuarios)}")
 
+                for u in usuarios:
+                    print(u)
+
             case "2":
                 archivo_libros = input("Ingrese el nombre del archivo de libros: ")
                 libros = cargar_archivo(archivo_libros)
@@ -479,7 +486,8 @@ def main():
 
             case _:
                 print("Opción inválida. Intente de nuevo.")
-"""
+
+""""
 def main():
     archivo_usuarios = "usuarios.txt"
     archivo_libros = "libros.txt"
@@ -502,6 +510,7 @@ def main():
     listado_libros(prestamos)
     estadisticas(prestamos)
     prestamos_vencidos(prestamos)
+"""
 
 if __name__ == "__main__":
     main()
