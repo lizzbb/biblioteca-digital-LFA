@@ -35,7 +35,7 @@ def validar_campo(lexema, campo, linea_num) -> bool:
             if c not in letras_validas:
                 reporte_error(linea_num, i+1, c, campo)
     
-    elif campo == "id:libro":
+    elif campo == "id_libro":
         if not lex.startswith("LIB"):
             reporte_error(linea_num, 1, lex[:3], campo)
             return False
@@ -119,13 +119,13 @@ def validar_linea(tokens, linea, num_linea):
         print(f"inválido: cantidad incorrecta de campos en linea {num_linea}, se esperaban 6 campos, se encontraron {len(valores)}.")
         return None
 
-    if "desconcoido" in tipos:
+    if "desconocido" in tipos:
         dir=tipos.index("desconocido")
-        print(f"Inválido: lexema inválido '{valores[dir]}' en linea {num_linea}posición {dir+1}.")
+        print(f"Inválido: lexema inválido '{valores[dir]}' en linea {num_linea}, posición {dir+1}.")
         return None
     
     if tipos != orden_valido:
-        print(f"inválido: orden de tokens inváñido en línea {num_linea}; se obtuvo {tipos}, y se esperaban {orden_valido}.")
+        print(f"inválido: orden de tokens inválido en línea {num_linea}; se obtuvo {tipos}, y se esperaban {orden_valido}.")
         return None
     
     for campo, valor in zip(orden_valido, valores):
@@ -183,17 +183,34 @@ def cargar_archivo(nombre_archivo):
     datos = {}
 
     with open(nombre_archivo, "r", encoding="utf-8") as f:
-        encabezado = f.readline()  # ignorar encabezado
+        encabezado = f.readline().strip()
         lineas_leidas = 1
+
+        # Detectar tipo de archivo según encabezado
+        if encabezado == "id_usuario,nombre_usuario":
+            clave_campo, valor_campo = "id_usuario", "nombre_usuario"
+        elif encabezado == "id_libro,titulo_libro":
+            clave_campo, valor_campo = "id_libro", "titulo_libro"
+        else:
+            print(f"Error: Campos inválidos '{encabezado}' en archivo '{nombre_archivo}'. (Línea {lineas_leidas})")
+            return None
+        
         for linea in f:
             lineas_leidas += 1
             partes = linea.strip().split(",")
             if len(partes) != 2:
-                print(f"Inválido: cantidad incorrecta de campos en línea {lineas_leidas}, se esperaban 2, se encontraron {len(partes)}.")
+                print(f"Inválido: Cantidad incorrecta de campos en línea {lineas_leidas}, se esperaban 2, se encontraron {len(partes)}.")
                 continue
-
+            
             clave, valor = partes[0].strip(), partes[1].strip()
 
+            # Validar que la clave y valor coincida con los campos
+            if not (validar_campo(clave, clave_campo, lineas_leidas) and 
+                    validar_campo(valor, valor_campo, lineas_leidas)):
+                print(f"Inválido: Datos no coinciden con campos ('{clave_campo}', '{valor_campo}') esperados. (Línea {lineas_leidas})")
+                continue
+            
+            # Verificar duplicados
             if clave in datos:
                 print(f"Inválido: ID '{clave}' ya registrado. (Línea {lineas_leidas}: '{linea.strip()}').")
                 continue
@@ -201,7 +218,6 @@ def cargar_archivo(nombre_archivo):
             datos[clave] = valor
 
     return datos
-
 
 #Préstamos
 def historial_prestamos(prestamos):
@@ -243,7 +259,10 @@ def prestamos_vencidos(prestamos):
     fecha_actual = datetime.now().strftime("%Y-%m-%d")
     print("\nPRÉSTAMOS VENCIDOS")
     for p in prestamos:
-        if p["fecha_devolucion"] and p["fecha_devolucion"] < fecha_actual:
+        fecha_prestamo = datetime.strftime(p["fecha_prestamo"], "%Y-%m-%d")
+        fecha_devolucion = datetime.strftime(p["fecha_devolucion"], "%Y-%m-%d")
+
+        if (fecha_prestamo and fecha_devolucion) < fecha_actual:
             print(p)
 
 
