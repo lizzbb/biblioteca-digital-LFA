@@ -200,7 +200,7 @@ def leer_archivo(nombre_archivo, usuarios: dict[str, str], libros: dict[str,str]
     
 
 #Cargar usuarios y catalogo de libros
-def cargar_archivo(nombre_archivo):
+def cargar_archivo(nombre_archivo, tipo_datos):
     datos = {}
     try:
         with open(nombre_archivo, "r", encoding="utf-8") as f:
@@ -208,12 +208,12 @@ def cargar_archivo(nombre_archivo):
             lineas_leidas = 1
 
             # Detectar tipo de archivo según encabezado
-            if encabezado == "id_usuario,nombre_usuario":
+            if encabezado == "id_usuario,nombre_usuario" and tipo_datos == "usuarios":
                 clave_campo, valor_campo = "id_usuario", "nombre_usuario"
-            elif encabezado == "id_libro,titulo_libro":
+            elif encabezado == "id_libro,titulo_libro" and tipo_datos == "libros":
                 clave_campo, valor_campo = "id_libro", "titulo_libro"
             else:
-                print(f"Error: Campos inválidos '{encabezado}' en archivo '{nombre_archivo}'. (Línea {lineas_leidas})")
+                print(f"Error: Campos inválidos '{encabezado}' para {tipo_datos} en archivo '{nombre_archivo}'. (Línea {lineas_leidas})")
                 return None
             
             for linea in f:
@@ -228,7 +228,7 @@ def cargar_archivo(nombre_archivo):
                 # Validar que la clave y valor coincida con los campos
                 if not (validar_campo(clave, clave_campo, lineas_leidas) and 
                         validar_campo(valor, valor_campo, lineas_leidas)):
-                    print(f"Inválido: Datos no coinciden con campos ('{clave_campo}', '{valor_campo}') esperados. (Línea {lineas_leidas})")
+                    print(f"Datos no coinciden con campos ('{clave_campo}', '{valor_campo}') esperados. (Línea {lineas_leidas})")
                     continue
                 
                 # Verificar duplicados
@@ -245,8 +245,9 @@ def cargar_archivo(nombre_archivo):
 #Préstamos
 def historial_prestamos(prestamos):
     print("\nHISTORIAL DE PRÉSTAMOS")
+    print("ID usuario - nombre usuario - ID libro - titulo - fecha prestamo - fecha  devolucion")
     for p in prestamos:
-        print(p)
+        print(f" . .{p['id_usuario']} - {p['nombre_usuario']} - {p['id_libro']} - {p['titulo_libro']} - {p['fecha_prestamo']} - {p['fecha_devolucion']}")
 
 #Listado usuarios
 def listado_usuarios(prestamos):
@@ -280,18 +281,20 @@ def estadisticas(prestamos):
 #Vencidos
 def prestamos_vencidos(prestamos, fecha_actual):
     print("\nPRÉSTAMOS VENCIDOS")
+    print("ID usuario - nombre usuario - ID libro - titulo - fecha prestamo - fecha  devolucion")
 
-    fecha_actual = datetime.strptime(fecha_actual, "%Y-%m-%d") 
+    fecha_actual = datetime.strptime(fecha_actual, "%Y-%m-%d")
+    
     for p in prestamos:
         fecha_devolucion = p["fecha_devolucion"]
 
         if not fecha_devolucion:  
             continue  
-
+        
         fecha_devolucion = datetime.strptime(fecha_devolucion, "%Y-%m-%d")
 
         if fecha_devolucion < fecha_actual:
-            print(p)  # préstamo vencido
+            print(f" . .{p['id_usuario']} - {p['nombre_usuario']} - {p['id_libro']} - {p['titulo_libro']} - {p['fecha_prestamo']} - {p['fecha_devolucion']}")
 
 
 #plantilla documetno HTML
@@ -460,19 +463,26 @@ def main():
         match opcion:
             case "1":
                 archivo_usuarios = input(f"{ITALIC}Ingrese el nombre del archivo de usuarios: {RESET}")
-                usuarios = cargar_archivo(archivo_usuarios)
-                print(f"{GREEN}Usuarios cargados: {len(usuarios)}{RESET}")
-                for u in usuarios:
-                    print(f"- {u}: {usuarios[u]}")
+                print("\n" + "="*50)
+                usuarios = cargar_archivo(archivo_usuarios, "usuarios")
+                print("="*50)
+                if usuarios:
+                    print(f"{GREEN}Usuarios cargados: {len(usuarios)}{RESET}")
+                    
 
             case "2":
                 archivo_libros = input(f"{ITALIC}Ingrese el nombre del archivo de libros: {RESET}")
-                libros = cargar_archivo(archivo_libros)
-                print(f"{GREEN}Libros cargados: {len(libros)}{RESET}")
+                print("\n" + "="*50)
+                libros = cargar_archivo(archivo_libros, "libros")
+                print("="*50)
+                if libros:
+                    print(f"{GREEN}Libros cargados: {len(libros)}{RESET}")
 
             case "3":
                 archivo_prestamos = input(f"{ITALIC}Ingrese el archivo de préstamos (.lfa): {RESET}")
+                print("\n" + "="*50)
                 prestamos = leer_archivo(archivo_prestamos, usuarios, libros)
+                print("="*50)
                 print(f"{GREEN}Préstamos cargados: {len(prestamos)}{RESET}")
 
             case "4":
