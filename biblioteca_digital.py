@@ -420,76 +420,92 @@ def exportar_vencidos(prestamos, fecha_actual):
     exportar_html("reporte_vencidos.html", "Préstamos Vencidos",
                   ["ID Usuario", "ID Libro", "Título", "Fecha Préstamo", "Fecha Devolución"], vencidos)
 
+# Colores y estilos ANSI
+RESET = "\033[0m"
+BOLD = "\033[1m"
+ITALIC = "\033[3m"
+
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+PURPLE = "\033[35m"
+PINK = "\033[95m"
+CYAN = "\033[36m"
+
+def mostrar_menu():
+    print("\n" + "="*50)
+    print(f"{BOLD}{PINK}BIBLIOTECA DIGITAL{RESET}".center(50))
+    print("="*50)
+    print(f"{YELLOW}1.{RESET} Cargar usuarios")
+    print(f"{YELLOW}2.{RESET} Cargar libros")
+    print(f"{YELLOW}3.{RESET} Cargar registro de préstamos desde archivo")
+    print(f"{YELLOW}4.{RESET} Mostrar historial de préstamos")
+    print(f"{YELLOW}5.{RESET} Mostrar listado de usuarios únicos")
+    print(f"{YELLOW}6.{RESET} Mostrar listado de libros prestados")
+    print(f"{YELLOW}7.{RESET} Mostrar estadísticas de préstamos")
+    print(f"{YELLOW}8.{RESET} Mostrar préstamos vencidos")
+    print(f"{YELLOW}9.{RESET} Exportar todos los reportes a HTML")
+    print(f"{RED}0.{RESET} Salir")
+    print("="*50)
+
 def main():
     usuarios = {}
     libros = {}
     prestamos = []
 
     while True:
-        print("Biblioteca Digital:")
-        print("1. Cargar usuarios")
-        print("2. Cargar libros")
-        print("3. Cargar registro de préstamos desde archivo")
-        print("4. Mostrar historial de préstamos")
-        print("5. Mostrar listado de usuarios únicos")
-        print("6. Mostrar listado de libros prestados")
-        print("7. Mostrar estadísticas de préstamos")
-        print("8. Mostrar préstamos vencidos")
-        print("9. Exportar todos los reportes a HTML")
-        print("0. Salir")
-
-        opcion = input("Seleccione una opción: ")
+        mostrar_menu()
+        opcion = input(f"{ITALIC}Seleccione una opción: {RESET}")
 
         match opcion:
             case "1":
-                archivo_usuarios = input("Ingrese el nombre del archivo de usuarios: ")
+                archivo_usuarios = input(f"{ITALIC}Ingrese el nombre del archivo de usuarios: {RESET}")
                 usuarios = cargar_archivo(archivo_usuarios)
-                print(f"Usuarios cargados: {len(usuarios)}")
-
+                print(f"{GREEN}Usuarios cargados: {len(usuarios)}{RESET}")
                 for u in usuarios:
-                    print(u)
+                    print(f"- {u}: {usuarios[u]}")
 
             case "2":
-                archivo_libros = input("Ingrese el nombre del archivo de libros: ")
+                archivo_libros = input(f"{ITALIC}Ingrese el nombre del archivo de libros: {RESET}")
                 libros = cargar_archivo(archivo_libros)
-                print(f"Libros cargados: {len(libros)}")
+                print(f"{GREEN}Libros cargados: {len(libros)}{RESET}")
 
             case "3":
-                archivo_prestamos = input("Ingrese el archivo de préstamos (.lfa): ")
+                archivo_prestamos = input(f"{ITALIC}Ingrese el archivo de préstamos (.lfa): {RESET}")
                 prestamos = leer_archivo(archivo_prestamos, usuarios, libros)
-                print(f"Préstamos cargados: {len(prestamos)}")
+                print(f"{GREEN}Préstamos cargados: {len(prestamos)}{RESET}")
 
             case "4":
                 if prestamos:
                     historial_prestamos(prestamos)
                 else:
-                    print("No existen préstamos cargados")
+                    print(f"{YELLOW}{ITALIC}No existen préstamos cargados{RESET}")
 
             case "5":
                 if prestamos:
                     listado_usuarios(prestamos)
                 else:
-                    print("No existen préstamos cargados")
+                    print(f"{YELLOW}{ITALIC}No existen préstamos cargados{RESET}")
 
             case "6":
                 if prestamos:
                     listado_libros(prestamos)
                 else:
-                    print("No existen préstamos cargados")
+                    print(f"{YELLOW}{ITALIC}No existen préstamos cargados{RESET}")
 
             case "7":
                 if prestamos:
                     estadisticas(prestamos)
                 else:
-                    print("No existen préstamos cargados")
+                    print(f"{YELLOW}{ITALIC}No existen préstamos cargados{RESET}")
 
             case "8":
                 if prestamos:
                     fecha = datetime.now().strftime("%Y-%m-%d")
-                    print(f"Usando la fecha actual del sistema: {fecha}")
+                    print(f"{PURPLE}Usando la fecha actual del sistema: {fecha}{RESET}")
                     prestamos_vencidos(prestamos, fecha)
                 else:
-                    print("No existen préstamos cargados")
+                    print(f"{YELLOW}{ITALIC}No existen préstamos cargados{RESET}")
 
             case "9":
                 if prestamos:
@@ -498,44 +514,19 @@ def main():
                     exportar_libros(prestamos)
                     exportar_estadisticas(prestamos)
                     fecha = datetime.now().strftime("%Y-%m-%d")
-                    print(f"Usando la fecha actual del sistema: {fecha}")
                     exportar_vencidos(prestamos, fecha)
-                    print("Reportes exportados a HTML.")
+                    print(f"{GREEN}Reportes exportados a HTML.{RESET}")
                 else:
-                    print("No existen préstamos cargados")
+                    print(f"{YELLOW}{ITALIC}No existen préstamos cargados{RESET}")
 
             case "0":
-                print("Saliendo del sistema")
+                print(f"{RED}{BOLD}Saliendo del sistema...{RESET}")
                 break
 
             case _:
-                print("Opción inválida. Intente de nuevo.")
-
-""""
-def main():
-    archivo_usuarios = "usuarios.txt"
-    archivo_libros = "libros.txt"
-    archivo = "prueba.lfa"
-
-    usuarios = cargar_archivo(archivo_usuarios)
-    libros = cargar_archivo(archivo_libros)
-    prestamos = leer_archivo(archivo, usuarios, libros)
-    
-
-    for u in usuarios:
-        print(f"{u}: {usuarios[u]}")
-    
-    for l in libros: 
-        print(f"{l}: {libros[l]}")
-
-    # Reportes en consola
-    historial_prestamos(prestamos)
-    listado_usuarios(prestamos)
-    listado_libros(prestamos)
-    estadisticas(prestamos)
-    prestamos_vencidos(prestamos)
-"""
+                print(f"{RED}{ITALIC}Opción inválida. Intente de nuevo.{RESET}")
 
 if __name__ == "__main__":
     main()
+
 
