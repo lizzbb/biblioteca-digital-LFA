@@ -448,6 +448,7 @@ PURPLE = "\033[35m"
 PINK = "\033[95m"
 CYAN = "\033[36m"
 
+# Mostrar menú
 def mostrar_menu():
     print("\n" + "="*50)
     print(f"{BOLD}{PINK}BIBLIOTECA DIGITAL{RESET}".center(50))
@@ -464,6 +465,7 @@ def mostrar_menu():
     print(f"{RED}0.{RESET} Salir")
     print("="*50)
 
+# Main
 def main():
     usuarios = {}
     libros = {}
