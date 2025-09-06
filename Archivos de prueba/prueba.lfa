@@ -3,4 +3,4 @@ id_usuario,nombre_usuario,id_libro,titulo_libro,fecha_prestamo,fecha_devolucion
 1002,Carlos Ramírez,LIB002,Cien Años de Soledad,2025-07-03,
 1003,Lucía Méndez,LIB003,1984,2025-07-05,
 1004,20,LIB004,2015,2025-07-05,2025-07-10
-1001, Ana López,LIB002,Cien Años de Soledad,2025-07-08,2025-07-10
+1001, Ana López,LIB002,Cien Años de Soledad,2025-07-10,2025-07-08
