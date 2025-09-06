@@ -34,6 +34,7 @@ def validar_campo(lexema, campo, linea_num) -> bool:
         for i, c in enumerate(lex.lower()):
             if c not in letras_validas:
                 reporte_error(linea_num, i+1, c, campo)
+                return False
     
     elif campo == "id_libro":
         if not lex.startswith("LIB"):
@@ -46,6 +47,7 @@ def validar_campo(lexema, campo, linea_num) -> bool:
         for i, c in enumerate(lex):
             if not (c.isdigit() or c == "-"):
                 reporte_error(linea_num, i+1, c, campo)
+                return False
         try:
             datetime.strptime(lex, "%Y-%m-%d")
         except ValueError:
@@ -61,13 +63,13 @@ def validar_campo(lexema, campo, linea_num) -> bool:
 
 #clasificar lexemas
 def clasificar_lexema(lexema, posicion):
-    if posicion == 0 and lexema.isdigit() and len(lexema) >= 4:
+    if posicion == 0 and lexema.isdigit() and len(lexema) == 4:
         return "id_usuario"
 
     if posicion == 1 and all(c.isalpha() or c in "áéíóúÁÉÍÓÚñÑ. " for c in lexema):
         return "nombre_usuario"
 
-    if posicion == 2 and lexema.startswith("LIB") and lexema[3:].isdigit() and len(lexema[3:]) >= 3:
+    if posicion == 2 and lexema.startswith("LIB") and lexema[3:].isdigit() and len(lexema[3:]) == 3:
         return "id_libro"
 
     if posicion == 3 and (any(c.isalpha() for c in lexema) or any(c.isdigit() for c in lexema)):
@@ -82,7 +84,7 @@ def clasificar_lexema(lexema, posicion):
 
     if posicion == 5:
         if lexema.strip() == "":
-            return "VACIO"
+            return "fecha_devolucion"
         try:
             datetime.strptime(lexema, "%Y-%m-%d")
             return "fecha_devolucion"
@@ -108,6 +110,8 @@ def analizador_lexico(linea):
             lexema += c
     if lexema.strip():
         tokens.append((clasificar_lexema(lexema.strip(), posicion), lexema.strip()))
+    else:
+        tokens.append((clasificar_lexema("", posicion), ""))
     return tokens
 
 #validar línea completa
@@ -132,6 +136,20 @@ def validar_linea(tokens, linea, num_linea):
         if not validar_campo(valor, campo, num_linea):
             return None
     
+    fecha_prestamo = valores[4]
+    fecha_devolucion = valores[5]
+
+    if fecha_devolucion.strip():  # Si existe fecha_devolucion
+        f_prestamo = datetime.strptime(fecha_prestamo, "%Y-%m-%d")
+        f_devolucion = datetime.strptime(fecha_devolucion, "%Y-%m-%d")
+
+        if f_prestamo > f_devolucion:
+            print(f"Error semántico: línea {num_linea}, la fecha de préstamo "
+                f"'{fecha_prestamo}' es posterior a la fecha de devolución "
+                f"'{fecha_devolucion}'.")
+            return None
+    else:
+        pass
     return valores
 
 ###
@@ -262,12 +280,18 @@ def estadisticas(prestamos):
 #Vencidos
 def prestamos_vencidos(prestamos, fecha_actual):
     print("\nPRÉSTAMOS VENCIDOS")
-    for p in prestamos:
-        fecha_prestamo = datetime.strftime(p["fecha_prestamo"], "%Y-%m-%d")
-        fecha_devolucion = datetime.strftime(p["fecha_devolucion"], "%Y-%m-%d")
 
-        if (fecha_prestamo and fecha_devolucion) < fecha_actual:
-            print(p)
+    fecha_actual = datetime.strptime(fecha_actual, "%Y-%m-%d") 
+    for p in prestamos:
+        fecha_devolucion = p["fecha_devolucion"]
+
+        if not fecha_devolucion:  
+            continue  
+
+        fecha_devolucion = datetime.strptime(fecha_devolucion, "%Y-%m-%d")
+
+        if fecha_devolucion < fecha_actual:
+            print(p)  # préstamo vencido
 
 
 #plantilla documetno HTML
@@ -384,7 +408,7 @@ def exportar_estadisticas(prestamos):
                   ["Métrica", "Valor"], datos)
 
 
-def exportar_vencidos(prestamos, fecha_actual="2025-07-15"):
+def exportar_vencidos(prestamos, fecha_actual):
     fecha_actual = datetime.strptime(fecha_actual, "%Y-%m-%d")
     vencidos = []
     for p in prestamos:
