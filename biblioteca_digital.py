@@ -13,18 +13,19 @@ TOKENS = {
     "desconocido": "Símbolo no reconocido"
 }
 
+# orden valido de tokens
 orden_valido=["id_usuario", "nombre_usuario", "id_libro", "titulo_libro", "fecha_prestamo", "fecha_devolucion"]
-
-#validación de tokens
 
 #devolución de error en documento
 def reporte_error (linea_num, col_num, char, contexto):
     print(f"Error léxico: línea '{linea_num}', columna '{col_num}', carácter '{char}' inválido en campo {contexto}")
 
+# validar campo según lexema recibido
 def validar_campo(lexema, campo, linea_num) -> bool:
     letras_validas="abcdefghijklmnopqrstuvwxyzáéíóúñ "
     lex=lexema.strip()
 
+    # si no cumplen, devuelve el reporte de error
     if campo == "id_usuario":
         for i, c in enumerate(lex):
             if not c.isdigit():
@@ -61,7 +62,7 @@ def validar_campo(lexema, campo, linea_num) -> bool:
             return False
     return True
 
-#clasificar lexemas
+# clasificar lexemas según posición
 def clasificar_lexema(lexema, posicion):
     if posicion == 0 and lexema.isdigit() and len(lexema) == 4:
         return "id_usuario"
@@ -93,7 +94,7 @@ def clasificar_lexema(lexema, posicion):
 
     return "desconocido"
 
-#simulador de análisis léxico
+# simulador de análisis léxico
 def analizador_lexico(linea):
     lexema = ""
     tokens = []
@@ -114,28 +115,33 @@ def analizador_lexico(linea):
         tokens.append((clasificar_lexema("", posicion), ""))
     return tokens
 
-#validar línea completa
+# validar línea completa
 def validar_linea(tokens, linea, num_linea):
     tipos = [t[0] for t in tokens if t[0] != "coma"]
     valores = [t[1] for t in tokens if t[0] != "coma"]
 
+    # cantidad de campos
     if len(valores) != 6:
         print(f"inválido: cantidad incorrecta de campos en linea {num_linea}, se esperaban 6 campos, se encontraron {len(valores)}.")
         return None
 
+    # token desconocido en linea
     if "desconocido" in tipos:
         dir=tipos.index("desconocido")
         print(f"Inválido: lexema inválido '{valores[dir]}' en linea {num_linea}, posición {dir+1}.")
         return None
     
+    # orden de tokens incorrecto
     if tipos != orden_valido:
         print(f"inválido: orden de tokens inválido en línea {num_linea}; se obtuvo {tipos}, y se esperaban {orden_valido}.")
         return None
     
+    # validar campo por cada valor de token en la linea
     for campo, valor in zip(orden_valido, valores):
         if not validar_campo(valor, campo, num_linea):
             return None
     
+    # validación de fechas 
     fecha_prestamo = valores[4]
     fecha_devolucion = valores[5]
 
@@ -143,16 +149,19 @@ def validar_linea(tokens, linea, num_linea):
         f_prestamo = datetime.strptime(fecha_prestamo, "%Y-%m-%d")
         f_devolucion = datetime.strptime(fecha_devolucion, "%Y-%m-%d")
 
+        # fecha de prestamo es posterior a fecha de devolución 
         if f_prestamo > f_devolucion:
             print(f"Error semántico: línea {num_linea}, la fecha de préstamo "
                 f"'{fecha_prestamo}' es posterior a la fecha de devolución "
                 f"'{fecha_devolucion}'.")
             return None
-    else:
+    else: # la fecha de devolución es vacía -> no se ha devolvido
         pass
     return valores
 
-###
+####### 
+
+# leer archivo de prestamos y almacenarlos en una lista 
 
 def leer_archivo(nombre_archivo, usuarios: dict[str, str], libros: dict[str,str]):
     prestamos = []
@@ -166,7 +175,8 @@ def leer_archivo(nombre_archivo, usuarios: dict[str, str], libros: dict[str,str]
                 valores = validar_linea(tokens, linea, lineas_leidas)
                 if not valores:
                     continue  # descartar línea inválida
-
+                
+                # asignacion de campos
                 id_usuario, nombre_usuario, id_libro, titulo_libro_libro, fecha_prestamo, fecha_devolucion = valores
                 fecha_devolucion = fecha_devolucion if fecha_devolucion != "" else None
 
@@ -199,7 +209,8 @@ def leer_archivo(nombre_archivo, usuarios: dict[str, str], libros: dict[str,str]
     return prestamos
     
 
-#Cargar usuarios y catalogo de libros
+# Cargar usuarios y catalogo de libros en diccionarios
+
 def cargar_archivo(nombre_archivo, tipo_datos):
     datos = {}
     try:
@@ -237,32 +248,34 @@ def cargar_archivo(nombre_archivo, tipo_datos):
                     continue
 
                 datos[clave] = valor
+
     except FileNotFoundError: 
         print(f"\nNo existe el archivo: '{nombre_archivo}'")
     
     return datos
 
-#Préstamos
+# Préstamos
 def historial_prestamos(prestamos):
     print("\nHISTORIAL DE PRÉSTAMOS")
     print("ID usuario - nombre usuario - ID libro - titulo - fecha prestamo - fecha  devolucion")
     for p in prestamos:
         print(f" . .{p['id_usuario']} - {p['nombre_usuario']} - {p['id_libro']} - {p['titulo_libro']} - {p['fecha_prestamo']} - {p['fecha_devolucion']}")
 
-#Listado usuarios
+# Listado usuarios
 def listado_usuarios(prestamos):
     print("\nLISTADO DE USUARIOS")
     usuarios = {p["id_usuario"]: p["nombre_usuario"] for p in prestamos}
     for uid, nombre in usuarios.items():
         print(uid, "-", nombre)
 
-#Listado Libros 
+# Listado Libros 
 def listado_libros(prestamos):
     print("\nLIBROS PRESTADOS")
     libros = {p["id_libro"]: p["titulo_libro"] for p in prestamos}
     for lid, titulo in libros.items():
         print(lid, "-", titulo)
 
+# Estadisticas
 def estadisticas(prestamos):
     print("\nESTADÍSTICAS")
     total = len(prestamos)
@@ -278,7 +291,7 @@ def estadisticas(prestamos):
     print("Libro más prestado:", mas_prestado)
     print("Usuarios únicos:", len(usuarios))
 
-#Vencidos
+# Prestamos Vencidos
 def prestamos_vencidos(prestamos, fecha_actual):
     print("\nPRÉSTAMOS VENCIDOS")
     print("ID usuario - nombre usuario - ID libro - titulo - fecha prestamo - fecha  devolucion")
