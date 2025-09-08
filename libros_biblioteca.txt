@@ -1,0 +1,24 @@
+id_libro,titulo_libro
+LIB001,El Principito
+LIB002,Cien Años de Soledad
+LIB003,1984
+LIB004,Don Quijote de la Mancha
+LIB005,Fahrenheit 451
+LIB006,Crónica de una Muerte Anunciada
+LIB007,Rayuela
+LIB008,La Odisea
+LIB009,La Metamorfosis
+LIB010,La Divina Comedia
+LIB011,Pedro Páramo
+LIB012,El Amor en los Tiempos del Cólera
+LIB013,La Ciudad y los Perros
+LIB014,La Tregua
+LIB015,El Aleph
+LIB016,El Hobbit
+LIB017,Orgullo y Prejuicio
+LIB018,Crimen y Castigo
+LIB019,Madame Bovary
+LIB020,El Nombre de la Rosa
+LIB021,El libro veintiuno
+LIB022,El libro veintidos
+

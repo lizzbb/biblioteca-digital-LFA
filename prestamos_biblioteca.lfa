@@ -1,0 +1,201 @@
+id_usuario,nombre_usuario,id_libro,titulo_libro,fecha_prestamo,fecha_devolucion
+1015,Marcelo Diaz Donoso,LIB001,El Principito,2025-07-25,2025-08-06
+1029,Candelas Acero Falcón,LIB005,Fahrenheit 451,2025-08-30,2025-09-06
+1055,Sara del Adadia,LIB002,Cien Años de Soledad,2025-07-11,2025-07-22
+1030,Gerardo Giralt-Vigil,LIB017,Orgullo y Prejuicio,2025-08-07,2025-08-18
+1070,Dulce Tapia Fiol,LIB014,La Tregua,2025-09-05,2025-09-18
+1001,Amelia Julia Antúnez Quirós,LIB006,Crónica de una Muerte Anunciada,2025-07-16,2025-07-31
+1036,Eva María Blázquez Oliva,LIB005,Fahrenheit 451,2025-08-01,2025-08-16
+1014,Ana Belén Rodriguez,LIB003,1984,2025-09-01,2025-09-17
+1045,Duilio Acedo Barceló,LIB020,El Nombre de la Rosa,2025-08-20,2025-08-26
+1059,Salvador del Chaves,LIB018,Crimen y Castigo,2025-09-01,2025-09-18
+1011,Álvaro Buendía Salgado,LIB018,Crimen y Castigo,2025-08-21,2025-09-06
+1025,Chus Dueñas Cazorla,LIB003,1984,2025-08-22,2025-09-03
+1038,Gaspar Valera Zurita,LIB003,1984,2025-07-14,
+1013,Marcos Checa-Yáñez,LIB013,La Ciudad y los Perros,2025-08-13,2025-08-29
+1021,Claudio Wálter Vázquez Alcántara,LIB012,El Amor en los Tiempos del Cólera,2025-07-10,2025-07-23
+1010,Paco Blanco Trillo,LIB020,El Nombre de la Rosa,2025-08-04,2025-08-16
+1021,Claudio Wálter Vázquez Alcántara,LIB015,El Aleph,2025-09-02,2025-09-14
+1042,Marc Leal Llopis,LIB002,Cien Años de Soledad,2025-08-28,2025-09-03
+1041,Osvaldo Camps Escalona,LIB013,La Ciudad y los Perros,2025-08-13,2025-08-24
+1041,Osvaldo Camps Escalona,LIB007,Rayuela,2025-07-25,2025-08-11
+1059,Salvador del Chaves,LIB005,Fahrenheit 451,2025-08-01,2025-08-13
+1069,Hilda Durán,LIB009,La Metamorfosis,2025-08-30,2025-09-17
+1052,Luis Ángel Iglesia Pla,LIB012,El Amor en los Tiempos del Cólera,2025-09-05,2025-09-14
+1066,Anna Mónica Abril Sans,LIB016,El Hobbit,2025-07-17,2025-07-23
+1015,Marcelo Diaz Donoso,LIB005,Fahrenheit 451,2025-08-30,2025-09-17
+1009,Victor Manuel Aguiló Vallés,LIB013,La Ciudad y los Perros,2025-08-31,2025-09-19
+1068,Amor Rosado Arellano,LIB009,La Metamorfosis,2025-08-26,
+1002,Pánfilo Prada Pallarès,LIB004,Don Quijote de la Mancha,2025-08-25,2025-09-07
+1044,Omar del Flores,LIB004,Don Quijote de la Mancha,2025-07-29,2025-08-08
+1059,Salvador del Chaves,LIB001,El Principito,2025-08-24,
+1034,Ruy Sierra Calderon,LIB017,Orgullo y Prejuicio,2025-08-12,2025-09-02
+1014,Ana Belén Rodriguez,LIB010,La Divina Comedia,2025-08-04,
+1065,Nydia Marisela Cabezas Beltran,LIB020,El Nombre de la Rosa,2025-08-22,2025-09-07
+1021,Claudio Wálter Vázquez Alcántara,LIB018,Crimen y Castigo,2025-08-27,
+1068,Amor Rosado Arellano,LIB001,El Principito,2025-07-17,2025-08-06
+1003,Edelmira de Huguet,LIB004,Don Quijote de la Mancha,2025-08-25,
+1040,Natanael Gaya,LIB008,La Odisea,2025-08-18,2025-08-25
+1011,Álvaro Buendía Salgado,LIB016,El Hobbit,2025-07-22,
+1069,Hilda Durán,LIB005,Fahrenheit 451,2025-07-18,2025-08-07
+1022,Leocadia Juan Berrocal,LIB009,La Metamorfosis,2025-08-12,2025-08-30
+1028,Herminio del Bermejo,LIB018,Crimen y Castigo,2025-09-01,2025-09-12
+1040,Natanael Gaya,LIB013,La Ciudad y los Perros,2025-08-27,
+1048,Agustina Cuadrado-Izaguirre,LIB015,El Aleph,2025-08-23,
+1058,Isidora Oller Godoy,LIB004,Don Quijote de la Mancha,2025-08-30,2025-09-06
+1044,Omar del Flores,LIB001,El Principito,2025-08-09,2025-08-21
+1029,Candelas Acero Falcón,LIB001,El Principito,2025-07-12,2025-07-18
+1030,Gerardo Giralt-Vigil,LIB003,1984,2025-08-03,
+1043,Rogelio Gaya,LIB003,1984,2025-08-27,2025-09-09
+1063,Benjamín Almagro Peral,LIB007,Rayuela,2025-09-03,2025-09-23
+1032,Rebeca de Contreras,LIB016,El Hobbit,2025-09-06,
+1025,Chus Dueñas Cazorla,LIB004,Don Quijote de la Mancha,2025-08-22,2025-09-09
+1046,Cristóbal Busquets,LIB014,La Tregua,2025-08-12,2025-08-18
+1013,Marcos Checa-Yáñez,LIB002,Cien Años de Soledad,2025-08-26,2025-09-10
+1014,Ana Belén Rodriguez,LIB008,La Odisea,2025-07-28,2025-08-16
+1018,Ildefonso Arnau Valenciano,LIB014,La Tregua,2025-07-13,2025-08-01
+1032,Rebeca de Contreras,LIB003,1984,2025-08-07,2025-08-15
+1007,Augusto Corral Barceló,LIB018,Crimen y Castigo,2025-07-14,
+1012,Raquel Begoña Sanz Hernando,LIB008,La Odisea,2025-07-27,2025-08-16
+1062,Francisca Borrell Castro,LIB007,Rayuela,2025-08-31,
+1008,Carlito Inocencio Carlos Soria,LIB006,Crónica de una Muerte Anunciada,2025-07-16,2025-08-02
+1034,Ruy Sierra Calderon,LIB015,El Aleph,2025-09-01,2025-09-21
+1020,Paola Crescencia Amigó Segovia,LIB007,Rayuela,2025-07-27,2025-08-02
+1070,Dulce Tapia Fiol,LIB002,Cien Años de Soledad,2025-08-31,2025-09-06
+1007,Augusto Corral Barceló,LIB019,Madame Bovary,2025-07-24,2025-08-14
+1021,Claudio Wálter Vázquez Alcántara,LIB002,Cien Años de Soledad,2025-08-16,
+1011,Álvaro Buendía Salgado,LIB006,Crónica de una Muerte Anunciada,2025-08-03,2025-08-10
+1031,Fernanda Mateos-Cobos,LIB013,La Ciudad y los Perros,2025-07-16,2025-07-28
+1006,Godofredo Briones Menéndez,LIB020,El Nombre de la Rosa,2025-07-24,2025-08-14
+1041,Osvaldo Camps Escalona,LIB009,La Metamorfosis,2025-09-06,2025-09-21
+1031,Fernanda Mateos-Cobos,LIB009,La Metamorfosis,2025-09-04,2025-09-18
+1059,Salvador del Chaves,LIB011,Pedro Páramo,2025-08-23,
+1010,Paco Blanco Trillo,LIB001,El Principito,2025-09-03,2025-09-11
+1010,Paco Blanco Trillo,LIB018,Crimen y Castigo,2025-07-17,2025-07-30
+1017,Obdulia Ricart,LIB012,El Amor en los Tiempos del Cólera,2025-08-18,
+1032,Rebeca de Contreras,LIB012,El Amor en los Tiempos del Cólera,2025-08-02,2025-08-21
+1070,Dulce Tapia Fiol,LIB010,La Divina Comedia,2025-07-19,2025-08-09
+1002,Pánfilo Prada Pallarès,LIB018,Crimen y Castigo,2025-08-07,2025-08-15
+1018,Ildefonso Arnau Valenciano,LIB009,La Metamorfosis,2025-08-20,2025-08-28
+1020,Paola Crescencia Amigó Segovia,LIB009,La Metamorfosis,2025-08-08,2025-08-19
+1044,Omar del Flores,LIB007,Rayuela,2025-07-25,2025-08-07
+1065,Nydia Marisela Cabezas Beltran,LIB016,El Hobbit,2025-08-22,2025-08-28
+1012,Raquel Begoña Sanz Hernando,LIB014,La Tregua,2025-08-02,
+1006,Godofredo Briones Menéndez,LIB001,El Principito,2025-07-19,2025-07-28
+1034,Ruy Sierra Calderon,LIB006,Crónica de una Muerte Anunciada,2025-08-10,2025-08-28
+1002,Pánfilo Prada Pallarès,LIB004,Don Quijote de la Mancha,2025-07-29,2025-08-07
+1070,Dulce Tapia Fiol,LIB002,Cien Años de Soledad,2025-09-05,
+1019,Adora de Sedano,LIB014,La Tregua,2025-07-24,2025-08-07
+1047,Chucho Cadenas Cepeda,LIB002,Cien Años de Soledad,2025-08-19,
+1027,Lupe Roxana Galan Roda,LIB008,La Odisea,2025-08-28,2025-09-13
+1053,Merche Borrás Calvo,LIB020,El Nombre de la Rosa,2025-08-15,2025-08-27
+1021,Claudio Wálter Vázquez Alcántara,LIB006,Crónica de una Muerte Anunciada,2025-08-25,
+1004,Daniel del Lamas,LIB006,Crónica de una Muerte Anunciada,2025-07-30,2025-08-14
+1053,Merche Borrás Calvo,LIB008,La Odisea,2025-07-24,2025-08-01
+1049,Araceli Giner Rey,LIB002,Cien Años de Soledad,2025-07-23,
+1029,Candelas Acero Falcón,LIB007,Rayuela,2025-07-14,
+1059,Salvador del Chaves,LIB012,El Amor en los Tiempos del Cólera,2025-08-19,2025-08-31
+1029,Candelas Acero Falcón,LIB001,El Principito,2025-08-26,2025-09-12
+1043,Rogelio Gaya,LIB009,La Metamorfosis,2025-07-17,
+1036,Eva María Blázquez Oliva,LIB012,El Amor en los Tiempos del Cólera,2025-08-24,2025-09-10
+1069,Hilda Durán,LIB011,Pedro Páramo,2025-07-28,
+1015,Marcelo Diaz Donoso,LIB009,La Metamorfosis,2025-08-03,2025-08-16
+1005,Jorge Tomas Serra,LIB004,Don Quijote de la Mancha,2025-09-01,2025-09-17
+1041,Osvaldo Camps Escalona,LIB014,La Tregua,2025-08-09,2025-08-30
+1015,Marcelo Diaz Donoso,LIB013,La Ciudad y los Perros,2025-07-28,
+1025,Chus Dueñas Cazorla,LIB009,La Metamorfosis,2025-07-22,2025-08-09
+1001,Amelia Julia Antúnez Quirós,LIB017,Orgullo y Prejuicio,2025-07-25,
+1069,Hilda Durán,LIB007,Rayuela,2025-07-16,2025-07-23
+1043,Rogelio Gaya,LIB020,El Nombre de la Rosa,2025-09-01,2025-09-09
+1039,Evaristo Santamaria-Solís,LIB017,Orgullo y Prejuicio,2025-08-19,2025-09-06
+1042,Marc Leal Llopis,LIB013,La Ciudad y los Perros,2025-08-09,2025-08-18
+1025,Chus Dueñas Cazorla,LIB014,La Tregua,2025-09-06,2025-09-23
+1023,Esther de Villanueva,LIB020,El Nombre de la Rosa,2025-08-26,2025-09-12
+1001,Amelia Julia Antúnez Quirós,LIB010,La Divina Comedia,2025-09-06,2025-09-24
+1042,Marc Leal Llopis,LIB015,El Aleph,2025-08-16,2025-08-27
+1066,Anna Mónica Abril Sans,LIB016,El Hobbit,2025-09-05,2025-09-15
+1011,Álvaro Buendía Salgado,LIB010,La Divina Comedia,2025-08-31,2025-09-15
+1012,Raquel Begoña Sanz Hernando,LIB008,La Odisea,2025-07-14,2025-07-26
+1026,Adalberto Diéguez,LIB005,Fahrenheit 451,2025-07-26,2025-08-07
+1061,Victor Manuel Fortuny Marin,LIB020,El Nombre de la Rosa,2025-07-23,
+1010,Paco Blanco Trillo,LIB015,El Aleph,2025-08-30,2025-09-10
+1050,Nereida Sala Franch,LIB016,El Hobbit,2025-08-15,2025-08-24
+1001,Amelia Julia Antúnez Quirós,LIB004,Don Quijote de la Mancha,2025-09-01,2025-09-13
+1023,Esther de Villanueva,LIB017,Orgullo y Prejuicio,2025-08-22,2025-09-03
+1016,Lucho Barroso Carro,LIB015,El Aleph,2025-07-25,2025-08-13
+1068,Amor Rosado Arellano,LIB018,Crimen y Castigo,2025-07-18,2025-08-06
+1065,Nydia Marisela Cabezas Beltran,LIB014,La Tregua,2025-09-02,
+1058,Isidora Oller Godoy,LIB006,Crónica de una Muerte Anunciada,2025-08-07,2025-08-27
+1058,Isidora Oller Godoy,LIB009,La Metamorfosis,2025-07-15,2025-07-28
+1067,Heliodoro Iñiguez-Pozo,LIB016,El Hobbit,2025-07-19,2025-08-01
+1057,José María Pérez Hurtado,LIB003,1984,2025-09-02,2025-09-14
+1035,Carmina de Madrid,LIB011,Pedro Páramo,2025-08-19,2025-08-26
+1018,Ildefonso Arnau Valenciano,LIB005,Fahrenheit 451,2025-09-07,2025-09-16
+1028,Herminio del Bermejo,LIB003,1984,2025-07-25,2025-08-09
+1070,Dulce Tapia Fiol,LIB015,El Aleph,2025-08-02,2025-08-13
+1054,Édgar Diego Arana,LIB013,La Ciudad y los Perros,2025-08-06,
+1003,Edelmira de Huguet,LIB019,Madame Bovary,2025-07-26,2025-07-31
+1046,Cristóbal Busquets,LIB010,La Divina Comedia,2025-07-13,2025-07-31
+1069,Hilda Durán,LIB018,Crimen y Castigo,2025-07-30,2025-08-11
+1063,Benjamín Almagro Peral,LIB008,La Odisea,2025-08-30,2025-09-19
+1004,Daniel del Lamas,LIB013,La Ciudad y los Perros,2025-09-06,2025-09-23
+1022,Leocadia Juan Berrocal,LIB015,El Aleph,2025-09-04,
+1069,Hilda Durán,LIB001,El Principito,2025-08-16,
+1004,Daniel del Lamas,LIB003,1984,2025-08-30,2025-09-08
+1060,Lilia Mesa Martín,LIB006,Crónica de una Muerte Anunciada,2025-08-31,2025-09-17
+1042,Marc Leal Llopis,LIB007,Rayuela,2025-08-02,2025-08-17
+1049,Araceli Giner Rey,LIB009,La Metamorfosis,2025-07-14,2025-08-01
+1033,Griselda Jerez Andreu,LIB003,1984,2025-09-07,2025-09-13
+1045,Duilio Acedo Barceló,LIB008,La Odisea,2025-08-18,2025-08-24
+1004,Daniel del Lamas,LIB008,La Odisea,2025-09-03,2025-09-08
+1020,Paola Crescencia Amigó Segovia,LIB008,La Odisea,2025-08-28,2025-09-05
+1028,Herminio del Bermejo,LIB015,El Aleph,2025-07-23,2025-08-08
+1022,Leocadia Juan Berrocal,LIB020,El Nombre de la Rosa,2025-07-23,2025-07-31
+1021,Claudio Wálter Vázquez Alcántara,LIB010,La Divina Comedia,2025-07-21,2025-07-26
+1040,Natanael Gaya,LIB019,Madame Bovary,2025-07-20,2025-08-06
+1051,Rebeca de Mateos,LIB007,Rayuela,2025-07-21,2025-08-02
+1014,Ana Belén Rodriguez,LIB010,La Divina Comedia,2025-07-25,
+1016,Lucho Barroso Carro,LIB019,Madame Bovary,2025-07-24,2025-08-09
+1069,Hilda Durán,LIB014,La Tregua,2025-07-15,2025-07-22
+1065,Nydia Marisela Cabezas Beltran,LIB011,Pedro Páramo,2025-09-02,2025-09-20
+1063,Benjamín Almagro Peral,LIB004,Don Quijote de la Mancha,2025-07-11,2025-07-27
+1059,Salvador del Chaves,LIB005,Fahrenheit 451,2025-08-31,2025-09-21
+1035,Carmina de Madrid,LIB020,El Nombre de la Rosa,2025-07-19,
+1069,Hilda Durán,LIB016,El Hobbit,2025-07-24,2025-08-06
+1042,Marc Leal Llopis,LIB008,La Odisea,2025-08-05,
+1012,Raquel Begoña Sanz Hernando,LIB009,La Metamorfosis,2025-08-09,
+1032,Rebeca de Contreras,LIB015,El Aleph,2025-07-19,2025-08-05
+1044,Omar del Flores,LIB001,El Principito,2025-07-11,2025-07-26
+1024,Nicanor Montenegro Serrano,LIB016,El Hobbit,2025-09-01,2025-09-14
+1044,Omar del Flores,LIB009,La Metamorfosis,2025-07-16,
+1036,Eva María Blázquez Oliva,LIB018,Crimen y Castigo,2025-08-20,2025-08-31
+1011,Álvaro Buendía Salgado,LIB008,La Odisea,2025-08-19,2025-09-08
+1031,Fernanda Mateos-Cobos,LIB016,El Hobbit,2025-08-14,2025-09-03
+1058,Isidora Oller Godoy,LIB001,El Principito,2025-09-02,2025-09-14
+1052,Luis Ángel Iglesia Pla,LIB008,La Odisea,2025-08-08,2025-08-24
+1061,Victor Manuel Fortuny Marin,LIB018,Crimen y Castigo,2025-09-07,2025-09-25
+1043,Rogelio Gaya,LIB012,El Amor en los Tiempos del Cólera,2025-08-31,2025-09-13
+1040,Natanael Gaya,LIB009,La Metamorfosis,2025-08-07,2025-08-18
+1041,Osvaldo Camps Escalona,LIB004,Don Quijote de la Mancha,2025-08-25,2025-09-04
+1025,Chus Dueñas Cazorla,LIB007,Rayuela,2025-08-05,2025-08-18
+1068,Amor Rosado Arellano,LIB020,El Nombre de la Rosa,2025-09-05,2025-09-13
+1025,Chus Dueñas Cazorla,LIB010,La Divina Comedia,2025-09-03,2025-09-13
+1039,Evaristo Santamaria-Solís,LIB001,El Principito,2025-08-14,2025-08-23
+1036,Eva María Blázquez Oliva,LIB002,Cien Años de Soledad,2025-07-31,
+1038,Gaspar Valera Zurita,LIB005,Fahrenheit 451,2025-08-02,2025-08-22
+1014,Ana Belén Rodriguez,LIB001,El Principito,2025-09-07,2025-09-27
+1062,Francisca Borrell Castro,LIB015,El Aleph,2025-08-19,2025-08-25
+1033,Griselda Jerez Andreu,LIB016,El Hobbit,2025-08-26,2025-09-02
+1052,Luis Ángel Iglesia Pla,LIB016,El Hobbit,2025-08-01,2025-08-07
+1020,Paola Crescencia Amigó Segovia,LIB005,Fahrenheit 451,2025-09-03,
+1039,Evaristo Santamaria-Solís,LIB003,1984,2025-09-06,
+1016,Lucho Barroso Carro,LIB018,Crimen y Castigo,2025-07-26,2025-08-07
+1067,Heliodoro Iñiguez-Pozo,LIB013,La Ciudad y los Perros,2025-08-05,2025-08-24
+1039,Evaristo Santamaria-Solís,LIB019,Madame Bovary,2025-08-06,
+1040,Natanael Gaya,LIB019,Madame Bovary,2025-07-17,2025-07-25
+1027,Lupe Roxana Galan Roda,LIB007,Rayuela,2025-09-07,2025-09-14
+1021,Claudio Wálter Vázquez Alcántara,LIB008,La Odisea,2025-08-25,2025-09-01
+1021,Claudio Wálter Vázquez Alcántara,LIB001,El Principito,2025-09-07,2025-09-27
+1038,Gaspar Valera Zurita,LIB002,Cien Años de Soledad,2025-07-10,2025-07-24
+1059,Salvador del Chaves,LIB003,1984,2025-08-07,2025-08-20
+1026,Adalberto Diéguez,LIB014,La Tregua,2025-08-02,2025-08-14
